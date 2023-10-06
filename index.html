@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Đồng hồ đếm ngược</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="main.css">
+    </head>
+<body>
+    <div class="timeBox">
+        <strong class="input-text">
+            Nhập thông tin ban đầu:<br>
+        </strong>
+        <input type="text" id="gio-bd" placeholder="Giờ" value="" class="time-input"> :
+        <input type="text" id="phut-bd" placeholder="Phút" value="" class="time-input"> :
+        <input type="text" id="giay-bd" placeholder="Giây" value="" class="time-input"><br> 
+        <input type="button" value="Start" onclick="start()" class="start-btn">
+        <input type="button" value="Stop" onclick="stop()" class="stop-btn">
+        <input type="button" value="Reset" onclick="reset()" class="reset-btn">
+    </div>
+        
+    <div class="timeRun-box">
+        <strong>Đếm ngược:</strong>
+        <span id="gio" class="time-run">Giờ</span> :
+        <span id="phut" class="time-run">Phút</span> :
+        <span id="giay" class="time-run">Giây</span>
+    </div>
+
+    <script>
+        let h = null;
+        let m = null; 
+        let s = null; 
+        let timeout = null; 
+        let timereset = null
+
+        function start()
+        {
+
+        if (h === null)
+        {
+            h = parseInt(document.getElementById('gio-bd').value);
+            m = parseInt(document.getElementById('phut-bd').value);
+            s = parseInt(document.getElementById('giay-bd').value);
+        }
+
+        if (s === -1){
+            m -= 1;
+            s = 59;
+        }
+
+        if (m === -1){
+            h -= 1;
+            m = 59;
+        }
+
+        if (h == -1){
+            clearTimeout(timeout);
+            alert('Hết giờ');
+            return false;
+        }
+
+        document.getElementById('gio').innerText = h.toString();
+        document.getElementById('phut').innerText = m.toString();
+        document.getElementById('giay').innerText = s.toString();
+
+        timeout = setTimeout(function(){
+            s--;
+            start();
+        }, 1000);
+        }
+
+        function stop(){
+            clearTimeout(timeout);
+        }
+
+        function reset(){
+            document.getElementById('gio').innerText = 0;
+            document.getElementById('phut').innerText = 0;
+            document.getElementById('giay').innerText = 0;
+            }
+    </script>
+</body>
+</html>
